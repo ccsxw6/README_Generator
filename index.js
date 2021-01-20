@@ -1,22 +1,24 @@
-const inquirer = require('inquirer'); //what does this allow? 
-const fs = require('fs'); // what does this allow? 
-const util = require('util'); // what does this allow? 
+const fs = require('fs'); // what does this allow me to use? 
+const inquirer = require('inquirer'); // what does this allow me to use? 
+const util = require('util'); // what does this allow me to use? 
 
-const writeFileAsync = util.promisify(fs.writeFile); //HUH? 
+const writeFileAsync = util.promisify(fs.writeFile);
+// setting a variable writeFileAsync to a function
+// util.promisify is a function taking in fs.writeFile as a parameter
 
 // inquirer uses an array of objects for its questions
-const promptUser = () =>
-    inquirer.prompt([
+const promptUser = () => {
+    return inquirer.prompt([ // why return? 
         {
             type: 'input',
-            name: 'title',
+            name: 'title', // use name to reference later when generating readme
             message: 'What is the title of your readme?',
         },
-        {
-            type: 'input',
-            name: 'description',
-            message: 'Describe your project',
-        },
+        // { GET RID OF THIS??
+        //     type: 'input',
+        //     name: 'description',
+        //     message: 'Describe your project',
+        // },
         {
             type: 'input',
             name: 'tableofcontents',
@@ -33,14 +35,14 @@ const promptUser = () =>
             message: 'How is this project used?',
         },
         {
-            type: 'list',
+            type: 'list', //change this
             name: 'license',
             message: 'Choose the license for this project.',
             choices: ["Apache", "Academic", "GNU", "ISC", "MIT", "Mozilla", "Open"]
         },
         {
             type: 'input',
-            name: 'contributing',
+            name: 'contribution',
             message: 'Who contributed to this project?',
         },
         {
@@ -64,35 +66,53 @@ const promptUser = () =>
             message: "What is your email?",
         },
     ]);
+};
 
-    promptUser()
-
-// const generateHTML = (answers) =>
-//     `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//   <title>Document</title>
-// </head>
-// <body>
-//   <div class="jumbotron jumbotron-fluid">
-//   <div class="container">
-//     <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-//     <p class="lead">I am from ${answers.location}.</p>
-//     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-//     <ul class="list-group">
-//       <li class="list-group-item">My GitHub username is ${answers.github}</li>
-//       <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-//     </ul>
-//   </div>
-// </div>
-// </body>
-// </html>`;
-
-// promptUser() calling promptUser
-//     //.then is a promise
-//     .then((answers) => writeFileAsync('index.html', generateHTML(answers)))
-//     .then(() => console.log('Successfully wrote to index.html'))
-//     .catch((err) => console.error(err));
+// function that makes the readme
+// takes in a parameter called answers
+function generateREADME(answers) {
+    // creating the markup in readme
+    return `# ${answers.title} 
+      
+  #### Table of Contents 
+  1. [Project Description](#project-description) 
+  2. [Installation Instructions](#installation-instructions)
+  3. [Usage Information](#usage-information)
+  4. [Contributor Guidelines](#contributor-guidelines)
+  5. [Code of Conduct](#code-of-conduct)
+  6. [Test Instructions](#test-instructions)
+  7. [License](#license)
+  8. [Questions](#questions)
+  ## Project Description
+  * ${answers.description}
+  ## Installation Instructions
+  * ${answers.install}
+  ## Usage Information
+  * ${answers.use}
+  ## Contributor Guidelines
+  * ${answers.contributions}
+  ## Code of Conduct
+  * [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/code_of_conduct.md)
+  ## Test Instructions
+  * ${answers.test}
+  ## License
+  * licensed under the ${answers.license}
+  ## Questions
+  * For additional help or questions about collaboration, please reach out to ${answers.email}
+  * Follow me on Github at [${answers.github}](http://github.com/${answers.github})`;
+    
+  }
+  
+  promptUser()
+    .then(function(answers) {
+      const readme = generateREADME(answers);
+  
+   
+      return writeFileAsync("README.md", readme);
+    })
+    .then(function() {
+      console.log(" README.md has been created!");
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
