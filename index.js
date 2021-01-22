@@ -71,10 +71,14 @@ const promptUser = () => {
 // function that makes the readme
 // takes in a parameter called answers
 function generateREADME(answers) {
-    // creating the markup in readme
+    // why return here
+    // The return statement ends function execution and specifies a value to
+    // be returned to the function caller.
+    // so, it's returning the following information to whatever calls generateREADME?
+    
     return `# ${answers.title} 
       
-  #### Table of Contents 
+  #### Table of Contents //creating table of contents
   1. [Project Description](#project-description) 
   2. [Installation Instructions](#installation-instructions)
   3. [Usage Information](#usage-information)
@@ -83,6 +87,7 @@ function generateREADME(answers) {
   6. [Test Instructions](#test-instructions)
   7. [License](#license)
   8. [Questions](#questions)
+
   ## Project Description
   * ${answers.description}
   ## Installation Instructions
