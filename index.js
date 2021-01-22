@@ -1,24 +1,23 @@
-const fs = require('fs'); // what does this allow me to use? 
-const inquirer = require('inquirer'); // what does this allow me to use? 
-const util = require('util'); // what does this allow me to use? 
+const fs = require('fs'); 
+const inquirer = require('inquirer'); 
+const util = require('util'); 
 
+//Takes writeFile from fs, then takes promisify from util and applys that to writeFile
+//Allows us to write the Readme file after user input
 const writeFileAsync = util.promisify(fs.writeFile);
-// setting a variable writeFileAsync to a function
-// util.promisify is a function taking in fs.writeFile as a parameter
 
-// inquirer uses an array of objects for its questions
 const promptUser = () => {
-    return inquirer.prompt([ // why return? 
+    return inquirer.prompt([ 
         {
             type: 'input',
-            name: 'title', // use name to reference later when generating readme
+            name: 'title', 
             message: 'What is the title of your readme?',
         },
-        // { GET RID OF THIS??
-        //     type: 'input',
-        //     name: 'description',
-        //     message: 'Describe your project',
-        // },
+        {
+            type: 'input',
+            name: 'description',
+            message: 'Describe your project',
+        },
         {
             type: 'input',
             name: 'tableofcontents',
@@ -68,14 +67,8 @@ const promptUser = () => {
     ]);
 };
 
-// function that makes the readme
-// takes in a parameter called answers
+
 function generateREADME(answers) {
-    // why return here
-    // The return statement ends function execution and specifies a value to
-    // be returned to the function caller.
-    // so, it's returning the following information to whatever calls generateREADME?
-    
     return `# ${answers.title} 
       
   #### Table of Contents //creating table of contents
@@ -108,11 +101,9 @@ function generateREADME(answers) {
     
   }
   
-  promptUser()
-    .then(function(answers) {
+  promptUser().then(function(answers) {
       const readme = generateREADME(answers);
-  
-   
+      console.log(answers) 
       return writeFileAsync("README.md", readme);
     })
     .then(function() {
