@@ -13,7 +13,7 @@
   ## Mock-Up
 
   Here is a video demonstrating this application
-  ![Functionality Gif](/readmegen_gif) 
+  ![Functionality Gif](./readmegen_gif.webm) 
 
   ## Project Description
   * This project generates
