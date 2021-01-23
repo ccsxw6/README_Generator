@@ -2,8 +2,6 @@ const fs = require('fs');
 const inquirer = require('inquirer'); 
 const util = require('util'); 
 
-//Takes writeFile from fs, then takes promisify from util and applys that to writeFile
-//Allows us to write the Readme file after user input
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const promptUser = () => {
@@ -20,13 +18,8 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            name: 'tableofcontents',
-            message: 'Provide a table of contents',
-        },
-        {
-            type: 'input',
             name: 'installation',
-            message: 'If applicable, describe the installation process',
+            message: 'Describe the installation process',
         },
         {
             type: 'input',
@@ -34,7 +27,7 @@ const promptUser = () => {
             message: 'How is this project used?',
         },
         {
-            type: 'list', //change this
+            type: 'list', 
             name: 'license',
             message: 'Choose the license for this project.',
             choices: ["Apache", "Academic", "GNU", "ISC", "MIT", "Mozilla", "Open"]
@@ -50,11 +43,6 @@ const promptUser = () => {
             message: "Is there a test included?",
         },
         {
-            type: 'input',
-            name: 'questions',
-            message: 'Questions?', //not sure about this one
-        },
-        {
             type: "input",
             name: "github",
             message: "What is your github username?",
@@ -64,6 +52,11 @@ const promptUser = () => {
             name: "email",
             message: "What is your email?",
         },
+        {
+            type: 'input',
+            name: 'questions',
+            message: 'Questions?', 
+        },
     ]);
 };
 
@@ -71,7 +64,7 @@ const promptUser = () => {
 function generateREADME(answers) {
     return `# ${answers.title} 
       
-  #### Table of Contents //creating table of contents
+  #### Table of Contents 
   1. [Project Description](#project-description) 
   2. [Installation Instructions](#installation-instructions)
   3. [Usage Information](#usage-information)
@@ -81,10 +74,15 @@ function generateREADME(answers) {
   7. [License](#license)
   8. [Questions](#questions)
 
+  ## Mock-Up
+
+  Here is a video demonstrating this application
+  ![GIF Of Functionality](./INSERT GIF HERE) 
+
   ## Project Description
   * ${answers.description}
   ## Installation Instructions
-  * ${answers.install}
+  * [App Link](${answers.install})
   ## Usage Information
   * ${answers.use}
   ## Contributor Guidelines
@@ -100,6 +98,7 @@ function generateREADME(answers) {
   * Follow me on Github at [${answers.github}](http://github.com/${answers.github})`;
     
   }
+
   
   promptUser().then(function(answers) {
       const readme = generateREADME(answers);
