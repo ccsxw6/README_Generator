@@ -18,7 +18,7 @@
   * [App Link](https://github.com/ccsxw6/README_Generator)
  
   ## License
-  * licensed under the MIT
+  * Licensed under the MIT license
 
   ## Questions
   * Feel free to reach out to me at ccsxw6@gmail.com
