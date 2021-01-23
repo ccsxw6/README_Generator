@@ -68,7 +68,7 @@ function generateREADME(answers) {
   1. [Project Description](#project-description) 
   2. [Installation Instructions](#installation-instructions)
   3. [Usage Information](#usage-information)
-  4. [Contributor Guidelines](#contributor-guidelines)
+  4. [Contributor](#contributor)
   5. [Code of Conduct](#code-of-conduct)
   6. [Test Instructions](#test-instructions)
   7. [License](#license)
