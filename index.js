@@ -4,6 +4,7 @@ const util = require('util');
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
+// function to prompt user for readme information
 const promptUser = () => {
     return inquirer.prompt([ 
         {
@@ -60,9 +61,9 @@ const promptUser = () => {
     ]);
 };
 
-
+// function to create readme using markup and user answers
 function generateREADME(answers) {
-    return `# ${answers.title} 
+  return `# ${answers.title} 
       
   #### Table of Contents 
   1. [Project Description](#project-description) 
@@ -96,13 +97,15 @@ function generateREADME(answers) {
   ## Questions
   * For additional help or questions about collaboration, please reach out to ${answers.email}
   * Follow me on Github at [${answers.github}](http://github.com/${answers.github})`;
-    
   }
-
   
+  // asynchronous function called after user has submitted answers to promptUser 
   promptUser().then(function(answers) {
+      // calling function to make readme
+      // setting that returned value to readme variable
       const readme = generateREADME(answers);
       console.log(answers) 
+      // writes data to readme file asynchronously
       return writeFileAsync("README.md", readme);
     })
     .then(function() {
